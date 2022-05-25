@@ -32,9 +32,17 @@ namespace sl {
         }
       }
 
+      void update(float deltaTime, sf::RenderWindow* window) {
+        if (runningScene) {
+          runningScene->update(deltaTime, window);
+        }
+      }
+
       Scenes getCurrentScene() {
         return runningSceneType;
       }
+
+
 
       void loadScene(Scenes const& s) {
         if (s == runningSceneType) return;

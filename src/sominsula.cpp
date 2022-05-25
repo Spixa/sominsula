@@ -38,6 +38,9 @@ namespace sl {
 
   void Sominsula::update() {
     update_events();
+
+    // TODO: IMPLEMENT DELTA TIME
+    manager.update(0.f, window.get());
     
   }
 

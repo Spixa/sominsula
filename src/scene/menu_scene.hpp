@@ -13,6 +13,10 @@ namespace sl {
       MenuScene() : Scene("menu_scene") {
         
       }
+
+      void update(float deltaTime, sf::RenderWindow* window) override {
+
+      }
   };
 };
 

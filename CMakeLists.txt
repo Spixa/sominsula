@@ -17,7 +17,14 @@ set(SFML_LIB ${INSTALL_DIR})
 
 add_compile_options(-g -static -O2)
 
-file(GLOB_RECURSE SRC_FILES ${CMAKE_SOURCE_DIR}/src/**.cpp)
+# file(GLOB_RECURSE SRC_FILES ${CMAKE_SOURCE_DIR}/src/**.cpp)
+
+set(SRC_FILES
+	${CMAKE_SOURCE_DIR}/src/main.cpp
+	${CMAKE_SOURCE_DIR}/src/sominsula.cpp
+	${CMAKE_SOURCE_DIR}/src/realm/realm.cpp
+	${CMAKE_SOURCE_DIR}/src/component/entity.cpp
+)
 
 include_directories(${SFML_LIB}/include)
 link_directories(${SFML_LIB}/lib)

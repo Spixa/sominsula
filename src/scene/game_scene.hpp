@@ -13,6 +13,10 @@ namespace sl {
       GameScene() : Scene("game_scene"), realm(std::make_shared<Realm>()) {
           pushDrawable(realm);
       }
+
+      void update(float deltaTime, sf::RenderWindow* window) override {
+        realm->update(deltaTime, window);
+      }
   };
 };
 

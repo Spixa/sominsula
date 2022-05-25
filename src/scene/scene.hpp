@@ -25,6 +25,8 @@ namespace sl {
           window->draw(*x.get());
         }
       }
+
+      virtual void update(float deltaTime, sf::RenderWindow* window) = 0;
   };
 };
 
