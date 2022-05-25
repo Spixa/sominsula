@@ -24,6 +24,8 @@ set(SRC_FILES
 	${CMAKE_SOURCE_DIR}/src/sominsula.cpp
 	${CMAKE_SOURCE_DIR}/src/realm/realm.cpp
 	${CMAKE_SOURCE_DIR}/src/component/entity.cpp
+	${CMAKE_SOURCE_DIR}/src/component/animation.cpp
+	${CMAKE_SOURCE_DIR}/src/component/io/entity_controller.cpp
 )
 
 include_directories(${SFML_LIB}/include)

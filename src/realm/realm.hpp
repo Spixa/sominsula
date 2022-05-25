@@ -3,14 +3,14 @@
 
 #include <SFML/Graphics.hpp>
 #include <memory>
-#include "../component/tilemap.hpp"
+#include "../component/entity.hpp"
 
 namespace sl {
-  class Realm : public sf::Drawable, public sf::Transformable {
+  class Realm : public sf::Drawable, public sf::Transformable{
 
     private:
       virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-      std::vector<std::shared_ptr<sf::Drawable>> drawables;
+      std::vector<std::shared_ptr<Entity>> entities;
 
       std::shared_ptr<TileMap> map;
 

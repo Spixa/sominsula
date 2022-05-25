@@ -25,6 +25,7 @@ namespace sl {
     while (window->isOpen()) {
       render();
       update();
+      deltaTime = getDeltaTime();
     }
   }
 
@@ -40,8 +41,13 @@ namespace sl {
     update_events();
 
     // TODO: IMPLEMENT DELTA TIME
-    manager.update(0.f, window.get());
+    manager.update(deltaTime, window.get());
     
+  }
+
+  float Sominsula::getDeltaTime() {
+    sf::Time dt = deltaTimeClock.restart();
+    return dt.asSeconds();
   }
 
   void Sominsula::update_events() {

@@ -15,7 +15,8 @@ namespace sl {
       sf::String default_title{"Sominsula"};
       
       SceneManager manager;
-      
+      sf::Clock deltaTimeClock{};
+      float deltaTime{};
 
       static Sominsula* m_instance;
     protected:
@@ -23,6 +24,7 @@ namespace sl {
       void loop();
       void render();
       void update();
+      float getDeltaTime();
 
     protected: // updates
       void update_events();
