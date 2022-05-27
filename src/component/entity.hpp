@@ -16,7 +16,7 @@ namespace sl {
 
   class Entity : public sf::Drawable, public sf::Transformable{
     protected:
-      sf::Sprite m_sprite;
+      sf::RectangleShape m_sprite{sf::Vector2f(32,32)};
       sf::Texture m_texture;
 
       std::vector<Animation*> entityAnimations;
@@ -40,7 +40,7 @@ namespace sl {
         entityAnimations.clear();
       }
 
-      sf::Sprite& getSprite() { return m_sprite; }
+      sf::RectangleShape& getSprite() { return m_sprite; }
       std::string getName() const { return name; }
       EntityType getType() const { return type; }
       double getSpeed() const { return speed; }
@@ -51,6 +51,9 @@ namespace sl {
       void setSpeed(double speed) { this->speed = speed; }
       void setHp(double hp) { this->hp = hp; }
       void setCurrentAnimation(unsigned int t) { currentAnimation = t; }
+      void setFaceFlip(bool right) {
+        entityAnimations[currentAnimation]->isFacingRight = right;
+      }
 
       void move(sf::Vector2f pos) { 
         m_sprite.move(sf::Vector2f(pos));
@@ -64,11 +67,7 @@ namespace sl {
       void update_entity(float deltaTime, sf::RenderWindow* window, TileMap* map) {
         if (!entityAnimations.empty() && entityAnimations[currentAnimation])
           entityAnimations[currentAnimation]->update(0, deltaTime);
-        
-        int x = m_sprite.getPosition().x / 32 / map->getScale().x;
-        int y = m_sprite.getPosition().y / 32 / map->getScale().y;
-
-        std::cout << "Standing at tile: " << x << " -- " << y << std::endl;
+      
 
         update(deltaTime, window);
       }

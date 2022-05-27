@@ -12,15 +12,16 @@ namespace sl {
     int updateAnimation{0};
     double speedMultiplier;
 
+    
+
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl)) {
       isRunning = true;
-      speedMultiplier = 2.f;
     } else {
       isRunning = false;
-      speedMultiplier = 1.f;
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+      entity->setFaceFlip(true);
       if (isRunning) {   
         updateAnimation = 2;
         speedMultiplier = 2.f;
@@ -32,6 +33,7 @@ namespace sl {
       entity->move(entity->getSpeed() * speedConstant * deltaTime * speedMultiplier, 0);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+      
       if (isRunning) {   
         updateAnimation = 2;
         speedMultiplier = 2.f;
@@ -54,6 +56,7 @@ namespace sl {
       entity->move(0,-(entity->getSpeed() * speedConstant * deltaTime * speedMultiplier));
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+       entity->setFaceFlip(false);
       if (isRunning) {   
         updateAnimation = 2;
         speedMultiplier = 2.f;

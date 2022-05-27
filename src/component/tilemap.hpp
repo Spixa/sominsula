@@ -1,6 +1,44 @@
 #include <SFML/Graphics.hpp>  
+#include <unordered_map>
+#include <iostream>
 
 namespace sl {
+  struct Tile {
+        int x, y;
+        sf::Vertex* quad;
+    private:
+        bool valid = false;
+    public:
+        bool isTileValid() const { return valid; }
+        
+        explicit Tile(sf::Vertex* quad, int x, int y) : x(x), y(y), quad(quad), valid(true) {}
+        Tile() : valid(false), x(0), y(0), quad(nullptr) {}
+
+        Tile(const Tile& other): x(other.x), y(other.y), quad(other.quad)  {
+        }
+  };
+
+  struct vec2i {
+    int x, y;
+    vec2i(int x, int y) : x(x), y(y) {}
+
+    bool operator==(const vec2i& other) const {
+        if (x == other.x && y == other.y) return true;
+        return false;
+    }
+  };
+
+    struct hash_fn
+    {
+        std::size_t operator() (const vec2i &node) const
+        {
+            std::size_t h1 = std::hash<int>()(node.x);
+            std::size_t h2 = std::hash<int>()(node.y);
+    
+            return h1 ^ h2;
+        }
+    };
+
   class TileMap : public sf::Drawable, public sf::Transformable
   {
   public:
@@ -40,12 +78,28 @@ namespace sl {
                   quad[1].texCoords = sf::Vector2f((tu + 1) * tileSize.x, tv * tileSize.y);
                   quad[2].texCoords = sf::Vector2f((tu + 1) * tileSize.x, (tv + 1) * tileSize.y);
                   quad[3].texCoords = sf::Vector2f(tu * tileSize.x, (tv + 1) * tileSize.y);
+
+                  tile_vector.insert({vec2i(i, j), Tile(quad, i, j)}); 
+                  std::cout << "inserted at " << i << " -- " << j << std::endl;
               }
 
           return true;
       }
 
+      Tile getTileFromIndex(int x, int y) {
+        if (tile_vector.find(vec2i(x,y)) != tile_vector.end())
+            return tile_vector.at(vec2i(x,y));
+        else
+            return emptyTile();
+      }
+
+      sf::Texture* getTexture() { return &m_tileset; }
+
   private:
+
+    Tile emptyTile() {
+        return Tile();
+    }
 
       virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const
       {
@@ -61,5 +115,6 @@ namespace sl {
 
       sf::VertexArray m_vertices;
       sf::Texture m_tileset;
+      std::unordered_map<vec2i, Tile, hash_fn> tile_vector;
   };
 }

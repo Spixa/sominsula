@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <memory>
 #include "../component/entity.hpp"
+#include "../component/displayed_tilemap.hpp"
 
 namespace sl {
   class Realm : public sf::Drawable, public sf::Transformable{
@@ -13,8 +14,8 @@ namespace sl {
       std::vector<std::shared_ptr<Entity>> entities;
 
       std::shared_ptr<TileMap> map;
-
-      int x{0},y{0};
+      std::shared_ptr<DisplayableTileMap> dispMap;
+      unsigned int mapSizeX{}, mapSizeY{};
     public:
       Realm();
       void update(float deltaTime, sf::RenderWindow* window);

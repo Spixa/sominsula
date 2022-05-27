@@ -11,12 +11,20 @@ namespace sl {
     currentImage.x = 0;
     
     texture = new sf::Texture();
+    flippedTexture = new sf::Texture();
+    flippedTextureImage = new sf::Image();
+
     texture->loadFromFile(textureLoc);
+    texture->setRepeated(true);
+    flippedTextureImage->loadFromFile(textureLoc);
+    flippedTextureImage->flipHorizontally();
+
+    flippedTexture->loadFromImage(*flippedTextureImage);
 
     animRect.width = texture->getSize().x / float(imageCount.x);
     animRect.height = texture->getSize().y / float(imageCount.y);
     
-    entity->getSprite().setTexture(*texture);
+    entity->getSprite().setTexture(texture);
     this->entity = entity;
   }
   
@@ -34,11 +42,23 @@ namespace sl {
       }
     }
 
+
     animRect.left = currentImage.x * animRect.width;
     animRect.top = currentImage.y * animRect.height;
 
-    entity->getSprite().setTexture(*texture);
-    entity->getSprite().setTextureRect(animRect);
+    sf::IntRect finalr;
+
+    // if (isFacingRight)
+    finalr = animRect;
+    // else {
+    //   finalr = sf::IntRect(animRect.width, 0, -animRect.width, animRect.height);
+    // }
+
+    // if (isFacingRight)
+    entity->getSprite().setTexture(texture);
+    // else
+    //   entity->getSprite().setTexture(flippedTexture);
+    entity->getSprite().setTextureRect(finalr);
   }
 
   Animation::~Animation() {

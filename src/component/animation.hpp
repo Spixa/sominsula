@@ -12,11 +12,6 @@ namespace sl {
       void update(int row,float deltaTime);
       ~Animation();
 
-      Animation(const Animation& other) : animRect(other.animRect), isFacingRight(other.isFacingRight), imageCount(other.imageCount), currentImage(other.currentImage), totalTime(other.totalTime),
-      switchTime(other.switchTime), texture(other.texture), entity(other.entity) {
-
-      }
-
     // Variables:
     public:
       sf::IntRect animRect; // Animation Integer rectangle 
@@ -31,6 +26,8 @@ namespace sl {
 
       sf::Texture* texture;
       Entity* entity;
+      sf::Image* flippedTextureImage;
+      sf::Texture* flippedTexture;
 	};
 }
 #endif

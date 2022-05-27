@@ -26,6 +26,7 @@ set(SRC_FILES
 	${CMAKE_SOURCE_DIR}/src/component/entity.cpp
 	${CMAKE_SOURCE_DIR}/src/component/animation.cpp
 	${CMAKE_SOURCE_DIR}/src/component/io/entity_controller.cpp
+	${CMAKE_SOURCE_DIR}/src/component/displayed_tilemap.cpp
 )
 
 include_directories(${SFML_LIB}/include)
