@@ -63,13 +63,13 @@ namespace sl {
         m_sprite.move(sf::Vector2f(x, y));
       }
 
-      virtual void update(float deltaTime, sf::RenderWindow* window) = 0;
+      virtual void update(float deltaTime, sf::RenderWindow* window, TileMap* map)= 0;
       void update_entity(float deltaTime, sf::RenderWindow* window, TileMap* map) {
         if (!entityAnimations.empty() && entityAnimations[currentAnimation])
           entityAnimations[currentAnimation]->update(0, deltaTime);
       
 
-        update(deltaTime, window);
+        update(deltaTime, window, map);
       }
   };
 }

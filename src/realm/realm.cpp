@@ -1,4 +1,5 @@
 #include "realm.hpp"
+#include <memory>
 #include <stdexcept>
 #include <iostream>
 #include <cmath>
@@ -13,7 +14,12 @@ namespace sl {
 
     target.draw(*dispMap.get());
 
+    map->setScale(getScale());
+    dispMap->setScale(getScale());
+
     for (auto X : entities) {
+      X->setScale(getScale());
+      
       target.draw(*X, states);
     }
 
@@ -24,9 +30,10 @@ namespace sl {
     std::vector<int> levelVector;
 
     int i,j;
-    for (i = 0; i < 80; i++) {
-      for (j = 0; j < 80; j++) {
-        levelVector.push_back(0);
+    for (i = 0; i < 100; i++) {
+      for (j = 0; j < 100; j++) {
+        srand(time(0));
+        levelVector.push_back((rand() % 10 == 0) ? 1 : 0);
       }
     }
 
@@ -39,7 +46,8 @@ namespace sl {
     if (!map->load("tileset.png", sf::Vector2u(32, 32), &levelVector[0], mapSizeX, mapSizeY))
         throw std::runtime_error("can't load tileset");
 
-    entities.push_back(std::make_shared<Player>());
+    mainPlayer = std::make_shared<Player>();
+    entities.push_back(mainPlayer);
   }
 
   void Realm::update(float deltaTime, sf::RenderWindow* window) {
@@ -54,11 +62,11 @@ namespace sl {
     float viewSizeHeight = window->getView().getSize().y;
 
 
-    int topLeftY = std::floor((viewCenterY - (viewSizeHeight / 2)) / 32 / map->getScale().y);
-    int downLeftY = std::floor((viewCenterY + (viewSizeHeight / 2)) / 32 / map->getScale().y);
+    int topLeftY = std::floor((viewCenterY - (viewSizeHeight / 2) - 100) / 32 / map->getScale().y);
+    int downLeftY = std::floor((viewCenterY + (viewSizeHeight / 2) + 100) / 32 / map->getScale().y);
 
-    int topRightX = std::floor(((viewCenterX + (viewSizeWidth / 2)) / 32 / map->getScale().x));
-    int topLeftX = std::floor((viewCenterX - (viewSizeWidth / 2)) / 32 / map->getScale().x);
+    int topRightX = std::floor(((viewCenterX + (viewSizeWidth / 2) + 100) / 32 / map->getScale().x));
+    int topLeftX = std::floor((viewCenterX - (viewSizeWidth / 2) - 100) / 32 / map->getScale().x);
 
     // int downLeftX = std::floor(((viewCenterX - (viewSizeWidth / 2)) / 32 / map->getScale().x));
     // int downRightX = std::floor((viewCenterX + (viewSizeWidth / 2)) / 32 / map->getScale().x);
@@ -79,5 +87,14 @@ namespace sl {
 
     dispMap->update(tiles);
 
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::G)) {
+      teleportEntity(entities[0].get(), 40, 40);
+    }
+  }
+
+  void Realm::teleportEntity(Entity* entity, int x, int y) {
+    x *= 32 * map->getScale().x;
+    y *= 32 * map->getScale().y;
+    entity->getSprite().setPosition(x, y);
   }
 };

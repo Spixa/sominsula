@@ -4,12 +4,20 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System/NonCopyable.hpp>
 #include <vector>
-#include <memory>
+#include <memory> 
+#include <functional>
 
 namespace sl {
   class Scene : public sf::NonCopyable {
       std::vector<std::shared_ptr<sf::Drawable>> drawables;  
       sf::String name;
+      std::vector<std::function<void( sf::Event)>> fns;
+
+    protected:
+      void registerEvent(std::function<void(sf::Event)> callback) {
+        fns.push_back(callback);
+      }
+
 
     public:
       explicit Scene(sf::String const& name) : name(name) {
@@ -27,6 +35,11 @@ namespace sl {
       }
 
       virtual void update(float deltaTime, sf::RenderWindow* window) = 0;
+      void update_events(sf::Event event) {
+        for (auto x : fns) {
+          x(event);
+        }
+      }
   };
 };
 

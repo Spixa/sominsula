@@ -7,16 +7,15 @@
 #include "../realm/realm.hpp"
 
 namespace sl {
+  namespace ui { class InventoryUI; }
   class GameScene : public sl::Scene {
       std::shared_ptr<Realm> realm;
+      std::shared_ptr<ui::InventoryUI> inv;
     public:
-      GameScene() : Scene("game_scene"), realm(std::make_shared<Realm>()) {
-          pushDrawable(realm);
-      }
+      GameScene();
 
-      void update(float deltaTime, sf::RenderWindow* window) override {
-        realm->update(deltaTime, window);
-      }
+      void update(float deltaTime, sf::RenderWindow* window) override;
+      
   };
 };
 

@@ -6,6 +6,8 @@
 namespace sl {
   class Player : public Entity {
     EntityController ec;
+    bool firstTime = true;
+
     public:
       Player() : Entity(EntityType::PlayerEntityType, "player", 20, 1), ec(this) {
         getSprite().setOrigin({16,16});
@@ -20,12 +22,18 @@ namespace sl {
 
       }
 
-      void update(float deltaTime, sf::RenderWindow* window) override {
+      void update(float deltaTime, sf::RenderWindow* window, TileMap* map) override {
+        sf::View view;
 
+        view.setCenter(m_sprite.getPosition());
+        view.setSize(sf::Vector2f(window->getSize()));
+        window->setView(view);
 
-        window->setView(sf::View(m_sprite.getPosition(), sf::Vector2f(window->getSize())));
         ec.control(deltaTime);
+        Tile t = map->setMaterialOfTile(m_sprite.getPosition().x / 32 / map->getScale().x, m_sprite.getPosition().y / 32 / map->getScale().y, 3);
+        map->updateTile(t);
 
+        
       }
 
       

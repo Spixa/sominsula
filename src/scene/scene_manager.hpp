@@ -38,6 +38,12 @@ namespace sl {
         }
       }
 
+      void update_event(sf::Event event) {
+        if (runningScene) {
+          runningScene->update_events(event);
+        }
+      }
+
       Scenes getCurrentScene() {
         return runningSceneType;
       }

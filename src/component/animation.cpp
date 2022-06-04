@@ -49,20 +49,22 @@ namespace sl {
     sf::IntRect finalr;
 
     // if (isFacingRight)
-    finalr = animRect;
+      finalr = animRect;
     // else {
-    //   finalr = sf::IntRect(animRect.width, 0, -animRect.width, animRect.height);
+    //  finalr = sf::IntRect(animRect.width, 0, -animRect.width, animRect.height);
     // }
 
-    // if (isFacingRight)
-    entity->getSprite().setTexture(texture);
-    // else
-    //   entity->getSprite().setTexture(flippedTexture);
+    if (isFacingRight)
+      entity->getSprite().setTexture(texture);
+    else
+       entity->getSprite().setTexture(flippedTexture);
     entity->getSprite().setTextureRect(finalr);
   }
 
   Animation::~Animation() {
-    // delete texture;
+    delete texture;
+    delete flippedTexture;
+    delete flippedTextureImage;
   }
 
   void Animation::flipTexture() {

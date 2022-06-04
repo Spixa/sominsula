@@ -11,7 +11,7 @@ namespace sl {
 
     m_texture.loadFromFile(path);
     m_sprite.setTexture(&m_texture);
-    m_sprite.setScale({1.5, 1.5});
+    m_sprite.setScale({2, 2});
 
   }
 

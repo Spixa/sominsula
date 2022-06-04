@@ -55,15 +55,11 @@ namespace sl {
 
     Event event;
     while (window->pollEvent(event)) {
-      switch (event.type) {
-        case Event::Closed:
-          // TODO: add function to handle saves before termination
-          window->close(); // close upon using the X button or Alt+F4
-        break;
-        default:
-          
-        break;
+      if (event.type == sf::Event::Closed) {
+        window->close();
       }
+
+      manager.update_event(event);
     }
   }
 

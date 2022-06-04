@@ -32,6 +32,7 @@ namespace sl {
 
     public:
       int exec();
+      sf::RenderWindow* getWindow() { return window.get(); }
 
       static Sominsula* getInstance();
   };
